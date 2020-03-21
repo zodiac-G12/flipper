@@ -1,0 +1,80 @@
+<script>
+
+function init() {
+    var k = 0;
+    const height = window.innerHeight;
+    const width = window.innerWidth;
+    while(1){
+        // div要素作成
+        var div = document.createElement("div");
+        div.setAttribute("id", String(k));
+        div.setAttribute("class", k&1 ? 'upper' : 'downer');
+        document.body.appendChild(div);
+
+        // 横長直方体
+        var boxH = Math.floor(Math.random() * 100)+100;
+        var boxW = Math.floor(Math.random() * 100) + boxH;
+        document.getElementById(k).style.width = `${boxW}px`
+        document.getElementById(k).style.height = `${boxH}px`
+
+        if (k&1) { // 上昇直方体の位置情報設定
+            document.getElementById(k).style.top = `${Math.random() * 2 * height}px`
+            document.getElementById(k).style.left = `${-1 * boxW}px`
+        } else { // 下降直方体の位置情報設定
+            document.getElementById(k).style.top = `${(Math.floor(Math.random()*2) ? 1 : -1) * Math.random() * height}px`
+        }
+
+        document.getElementById(k).innerHTML = `<h1 style="padding:0;margin:0;text-align:center;line-height:${boxH}px">${k}</h1>`;
+        // アニメーションの遅延時間設定
+        document.getElementById(k).style.animationDelay = `${Math.floor(Math.random()*50)}s`
+
+        // インクリメント
+        k = (k+1)|0;
+        if(k>100) break;
+    }
+}
+
+window.addEventListener("DOMContentLoaded", init);
+
+</script>
+
+<style>
+
+.upper, .downer{
+    padding: 0;
+    margin: 0;
+    position: absolute;
+}
+
+.upper{
+    background: rgba(60, 179, 113, 0.5);
+    animation: up linear 20s infinite;
+}
+
+.downer{
+    background: rgba(255, 127, 80, 0.5);
+    left: 100vw;
+    animation: down linear 20s infinite;
+}
+
+@keyframes up{
+    0%{
+    }
+    100%{
+        transform: translate(125vw, -100vh);
+    }
+}
+
+@keyframes down{
+    0%{
+    }
+    100%{
+        transform: translate(-125vw, 100vh);
+    }
+}
+
+</style>
+
+<body style="position:fixed;margin:0;padding:0;width:100vw;height:100vh;background:darkblue;">
+    <!-- <div style="left:10vw;top:10vh;width:80vw;height:100vh;background:black;position:fixed;z&#45;index:1;"></div> -->
+</body>
